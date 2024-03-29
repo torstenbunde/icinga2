@@ -7,3 +7,5 @@
 
 ## Juniper
 * ```check_junos_bgp_state.pl```: Check BGP State (Simple) - nagios plugin
+* ```check_snmp_juniper_majorfaults.sh```: Check Major Fault (Red Alarm)
+* ```check_snmp_juniper_subscribersallowed.sh```: Check Subscribers Allowed
