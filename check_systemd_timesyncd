@@ -1,0 +1,103 @@
+#!/usr/bin/perl
+#
+# MIT License
+#
+# Copyright (c) 2018 Josef 'veloc1ty' Stautner
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# 20240409 Torsten Bunde (github@torstenbunde.de)
+#	   Original script from https://github.com/vlcty/check_systemd_timesyncd
+#	   Changed line 73 from "service active" to "NTP service" for use in Ubuntu 22.04 LTS
+#	   Changed line 74 from "yes" to "active" for use in Ubuntu 22.04 LTS
+
+use strict;
+
+use constant TRUE => 1;
+use constant FALSE => 0;
+
+sub exitWarning {
+    printf("WARNING - %s\n", shift);
+    exit(1);
+}
+
+sub exitCritical {
+    printf("CRITICAL - %s\n", shift);
+    exit(2);
+}
+
+sub exitUnknown {
+    printf("UNKNOWN - %s\n", shift);
+    exit(3);
+}
+
+sub executeCommand {
+    my $command = shift;
+    my $shortCommand = shift;
+
+    my $output = `LANG=en_US.UTF-8 $command`;
+
+    if ( $? != 0 ) {
+        exitCritical(sprintf('Was not able to call %s', $shortCommand));
+    }
+
+    return $output;
+}
+
+sub checkTimedatectlStatus {
+    my $output = executeCommand('/usr/bin/timedatectl status', 'timedatectl');
+    my $lineClockSyncFoundAndYes = FALSE;
+    my $lineSystemdServiceActiveFoundAndYes = FALSE;
+
+    foreach my $currentLine ( split(/\n/, $output) ) {
+        chomp($currentLine);
+
+        if ( $currentLine =~ m/synchronized: (.*)/ ) {
+            $lineClockSyncFoundAndYes = TRUE if ( $1 eq 'yes' );
+            next;
+        }
+
+        if ( $currentLine =~ m/NTP service: (.*)/ ) {
+            $lineSystemdServiceActiveFoundAndYes = TRUE if ( $1 eq 'active' );
+            next;
+        }
+    }
+
+    if ( $lineClockSyncFoundAndYes == FALSE ) {
+        exitCritical('Clock is not in sync');
+    }
+
+    if ( $lineSystemdServiceActiveFoundAndYes == FALSE ) {
+        exitCritical('systemd-timesyncd service is not running');
+    }
+}
+
+sub checkForRootRights {
+    exitUnknown('This script has to run with root privileges') if ( $< != 0 );
+}
+
+sub main {
+    checkForRootRights();
+    checkTimedatectlStatus();
+
+    print("OK - systemd thinks everything is fine\n");
+    exit(0);
+}
+
+main();
