@@ -9,3 +9,6 @@
 * ```check_junos_bgp_state.pl```: Check BGP State (Simple) - nagios plugin
 * ```check_snmp_juniper_majorfaults.sh```: Check Major Fault (Red Alarm)
 * ```check_snmp_juniper_subscribersallowed.sh```: Check Subscribers Allowed
+
+## NTP/timesyncd
+* ```check_systemd_timesyncd```: Check timesyncd running on Ubuntu 22.04 LTS
