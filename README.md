@@ -1,6 +1,7 @@
 # icinga2
 
 ## Icingaweb2
+* ```businessprocess_update.sh```: Skript um Icingaweb2-Modul Business Process upzudaten.
 * ```director_update.sh```: Skript um Icingaweb2-Modul Director upzudaten.
 * ```grafana_update.sh```: Skript um Icingaweb2-Modul Grafana upzudaten.
 * ```reporting_update.sh```: Skript um Icingaweb2-Modul Reporting upzudaten.
