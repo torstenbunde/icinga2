@@ -2,6 +2,7 @@
 
 ## Icingaweb2
 * ```businessprocess_update.sh```: Skript um Icingaweb2-Modul Business Process upzudaten.
+* ```check_vip.sh```: Skript um im HA-Modus bestimmte Services nur auf dem System mit der virtuellen IP (vIP) laufen zu lassen. IP-Adresse ($VIP) und Netzwerkkarte (hier: `bond0`) müssen entsprechend angepasst werden.
 * ```director_update.sh```: Skript um Icingaweb2-Modul Director upzudaten.
 * ```grafana_update.sh```: Skript um Icingaweb2-Modul Grafana upzudaten.
 * ```reporting_update.sh```: Skript um Icingaweb2-Modul Reporting upzudaten.
