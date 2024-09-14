@@ -18,3 +18,4 @@
 
 ## NTP/timesyncd
 * ```check_systemd_timesyncd```: Check timesyncd running on Ubuntu 22.04 LTS
+* ```check_vmware_ntp.pl```: Check NTP auf ESX-Servern.
