@@ -11,6 +11,9 @@
 ## F5 (WAF)
 * ```check_f5_time.sh```: Check um Zeitabweichung zweier F5-WAF-Systeme zu prüfen.
 
+## Hewlett Packard Enterprise (HPE)
+* ```check_hpe_firmware.sh```: Da das Skript [check_hp_firmware](https://github.com/NETWAYS/check_hp_firmware) ab einer Firmware-Version >= 3.00 bei iLO 5 derzeit Fehler wirft bzw. die Abfrage abbricht habe ich mir als Alternative ein Shellskript gebastelt, dass auf [check_redfish.py](https://github.com/bb-Ricardo/check_redfish) aufbaut und die zurückgegebenen Inventar-Daten auf eine Mindestversion prüft. Ich habe die Hoffnung aber noch nicht ganz aufgegeben, dass HPE das eigentliche Problem irgendwann einmal in den Griff bekommt ...
+
 ## Juniper
 * ```check_junos_bgp_state.pl```: Check BGP State (Simple) - nagios plugin
 * ```check_snmp_juniper_majorfaults.sh```: Check Major Fault (Red Alarm)
