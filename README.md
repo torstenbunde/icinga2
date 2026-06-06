@@ -8,6 +8,9 @@
 * ```pdfexport_update.sh```: Skript um Icingaweb2-Modul PDF Export upzudaten.
 * ```reporting_update.sh```: Skript um Icingaweb2-Modul Reporting upzudaten.
 
+## Zertifikate
+* ```check_ssl_crl.sh```: Skript um Certificate Revocation Lists (CRL) auf Gültigkeit zu überprüfen.
+
 ## F5 (WAF)
 * ```check_f5_time.sh```: Check um Zeitabweichung zweier F5-WAF-Systeme zu prüfen.
 
